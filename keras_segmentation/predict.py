@@ -14,6 +14,8 @@ from .data_utils.data_loader import get_image_array, get_segmentation_array,\
     DATA_LOADER_SEED, class_colors, get_pairs_from_paths
 from .models.config import IMAGE_ORDERING
 
+from PIL import Image
+
 
 random.seed(DATA_LOADER_SEED)
 
@@ -153,15 +155,21 @@ def predict(model=None, inp=None, out_fname=None,
     pr = model.predict(np.array([x]))[0]
     pr = pr.reshape((output_height,  output_width, n_classes)).argmax(axis=2)
 
-    seg_img = visualize_segmentation(pr, inp, n_classes=n_classes,
-                                     colors=colors, overlay_img=overlay_img,
-                                     show_legends=show_legends,
-                                     class_names=class_names,
-                                     prediction_width=prediction_width,
-                                     prediction_height=prediction_height)
+    print ('Printing unique values in pr : ')
+    print (np.unique(pr))
 
-    if out_fname is not None:
-        cv2.imwrite(out_fname, seg_img)
+    img = Image.fromarray(np.uint8(pr), 'L')
+    img.save(out_fname)
+
+    # seg_img = visualize_segmentation(pr, inp, n_classes=n_classes,
+    #                                  colors=colors, overlay_img=overlay_img,
+    #                                  show_legends=show_legends,
+    #                                  class_names=class_names,
+    #                                  prediction_width=prediction_width,
+    #                                  prediction_height=prediction_height)
+
+    # if out_fname is not None:
+    #     cv2.imwrite(out_fname, seg_img)
 
     return pr
 
