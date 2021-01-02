@@ -154,8 +154,8 @@ def predict(model=None, inp=None, out_fname=None,
                         ordering=IMAGE_ORDERING)
     pr = model.predict(np.array([x]))[0]
     pr = pr.reshape((output_height,  output_width, n_classes)).argmax(axis=2)
-    out_fnamez = out_fname.replace('png','npz')
-    np.savez(out_fnamez, pr)
+    # out_fnamez = out_fname.replace('png','npz')
+    # np.savez(out_fnamez, pr)
 
     print ('Printing unique values in pr : ')
     print (np.unique(pr))
