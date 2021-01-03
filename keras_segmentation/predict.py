@@ -161,7 +161,7 @@ def predict(model=None, inp=None, out_fname=None,
     print (np.unique(pr))
     target_res = (1280, 720)
     img = Image.fromarray(np.uint8(pr), 'L')
-    img.resize(target_res, resample=Image.NEAREST)
+    img = img.resize(target_res, resample=Image.NEAREST)
     img.save(out_fname)
 
     # seg_img = visualize_segmentation(pr, inp, n_classes=n_classes,
